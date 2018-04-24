@@ -8,20 +8,22 @@ ApplicationWindow {
     visible: true
     title: qsTr("backlight")
     width: 500
-    height: 50
+    height: 500
     x: (Screen.width - width) / 2
     y: (Screen.height - height) / 2
-    color: "transparent"
+    color: "white"
 
     function windowMode(val){
         if (val > 0.5)
         {
             backlight.flags = Qt.FramelessWindowHint;
+            status.color = "green";
 
         }
         else
         {
             backlight.flags = Qt.WindowStaysOnTopHint;
+            status.color = "red"
         }
     }
 
@@ -31,22 +33,27 @@ ApplicationWindow {
 
     Rectangle {
         anchors.centerIn: parent
-        width: parent.width
-        height: 50
+        height: backlight.height/4
+        width: backlight.width/2
+
         color: "transparent"
 
         Rectangle {
+            id: status
             anchors.fill: parent
-            radius: 25
-            opacity: 0.3
-            color: "gray"
+            height: backlight.height/4
+            width: backlight.width/2
+            radius: backlight.width/4
+            opacity: 0.5
+            color: "red"
         }
 
         Slider {
+            id: slider
             anchors.centerIn: parent
-            width: backlight.width - 16
+            width: backlight.width/2
             height: backlight.height
-            value: backlight.slideValue
+            //value: backlight.slideValue
             focus: true
             onValueChanged: backlight.windowMode(value)
 
@@ -60,13 +67,14 @@ ApplicationWindow {
                     color: "gray"
                 }
                 handle: Rectangle {
+                    id: changeButton
                     anchors.centerIn: parent
                     color: control.pressed ? "white" : "lightgray"
                     border.color: "gray"
                     border.width: 2
-                    width: 34
-                    height: 34
-                    radius: 17
+                    width: backlight.width/4
+                    height: backlight.height/4
+                    radius: backlight.height/8
                 }
             }
         }
