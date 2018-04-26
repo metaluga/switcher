@@ -27,6 +27,18 @@ ApplicationWindow {
         }
     }
 
+    function toglePresed(val){
+        if (val > 0.5)
+        {
+            slider.value = 1;
+        }
+        else
+        {
+            slider.value = 0;
+        }
+
+    }
+
 
     property real slideValue
     signal onSlide(real value)
@@ -53,17 +65,16 @@ ApplicationWindow {
             anchors.centerIn: parent
             width: backlight.width/2
             height: backlight.height
-            //value: backlight.slideValue
             focus: true
             onValueChanged: backlight.windowMode(value)
-
+            onPressedChanged: toglePresed(value)
             Keys.onSpacePressed: Qt.quit()
             Keys.onEscapePressed: Qt.quit()
 
             style: SliderStyle {
                 groove: Rectangle {
                     implicitHeight: 8
-                    radius: 4
+                    radius: backlight.height/8
                     color: "gray"
                 }
                 handle: Rectangle {
